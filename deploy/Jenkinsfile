@@ -1,0 +1,69 @@
+def platforms
+if (!params.arch || params.arch == "x86") {
+    platforms = "linux/amd64"
+} else if (params.arch == "arm") {
+    platforms = "linux/arm64"
+} else if (params.arch == "all") {
+    platforms = "linux/amd64,linux/arm64"
+} else {
+    platforms = "linux/amd64"
+}
+
+pipeline {
+    agent { label "build" }
+    stages {
+        /**
+         * 准备阶段，配置git
+         */
+        stage('准备阶段') {
+            steps {
+                script {
+                    // 如果平台调用传入cnos_version，则使用平台版本编译
+            		if (params.cnos_version) {
+            			VERSION=params.cnos_version
+            			BRANCH_NAME=params.cnos_version
+            		}
+                    // 打印变量
+            		echo "VERSION:${VERSION}"
+            		echo "BRANCH_NAME:${BRANCH_NAME}"
+            		echo "cnos_version:${params.cnos_version}"
+                }
+            }
+        }
+
+        stage('build') {
+            steps {
+                script {
+                    git branch: "${BRANCH_NAME}", credentialsId: '1b62b964-6935-46fe-bfe0-ae8fe999c812', url: 'http://172.171.15.70/sunjiankun/flyingflower.git'
+                    withDockerContainer(args: '-v /root/.m2:/root/.m2', image: 'hub.pmlabs.com.cn/common/maven:3.5.0-jdk-8') {
+                        sh '''
+                        mvn clean package -Dmaven.test.skip=true -s /root/.m2/settings.xml
+                        '''
+                    }
+                }
+            }
+        }
+        stage('image') {
+            steps {
+                script {
+                     echo "build docker image, starting"
+                     sh "docker login -u pusher -p Harbor12345 hub.pmlabs.com.cn"
+                     buildDockerImage("flying-flower", VERSION, platforms)
+                     echo "Build flying-flower module image success!"
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 构建镜像
+ * @param moduleName 模块名
+ * @param imageVersion 镜像版本号
+ * @param platforms 架构信息
+ * @return
+ */
+def buildDockerImage(moduleName, imageVersion, platforms) {
+    echo "build docker image:hub.pmlabs.com.cn/nso/${moduleName}:${imageVersion}"
+    sh "docker buildx build --platform ${platforms} --push -t hub.pmlabs.com.cn/third-party/${moduleName}:${imageVersion} ."
+}
