@@ -34,7 +34,7 @@ spring:
       remove-abandoned: true
       remove-abandoned-timeout: 180
       log-abandoned: true
-    schema: classpath:mybatis/sql/feihua-schema.sql
+    schema: classpath:mybatis/sql/schema.sql
     initialization-mode: always
     platform: all
   jackson:
