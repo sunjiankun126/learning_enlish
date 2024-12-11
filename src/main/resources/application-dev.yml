@@ -10,7 +10,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://182.43.99.171:7006/feihua?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai&autoReconnect=true&failOverReadOnly=false&connectTimeout=60000&socketTimeout=60000
+    url: jdbc:mysql://182.43.99.171:7006/learning_english?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF8&serverTimezone=Asia/Shanghai&autoReconnect=true&failOverReadOnly=false&connectTimeout=60000&socketTimeout=60000
     username: root
     password: ZZPass2019!
     druid:
