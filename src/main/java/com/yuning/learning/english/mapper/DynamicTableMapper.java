@@ -9,8 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
 
 
-@Mapper
 public interface DynamicTableMapper {
-    @SelectProvider(type = DynamicDictSqlProvider.class, method = "getSelectSql")
+//    @SelectProvider(type = DynamicDictSqlProvider.class, method = "getSelectSql")
     IPage<Word> selectFromTable(Page<?> page, @Param("tableName") String tableName);
 }
