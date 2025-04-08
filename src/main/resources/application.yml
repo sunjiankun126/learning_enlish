@@ -81,7 +81,7 @@ feign:
         readTimeout: 100000
 wechat:
   appid: "wxa0e3ba1698f04ad5"
-  secret: "10db9de0213ec489dbbd1079c4ac074f"
+  secret: "11e671c4d0d59842103fdb9af44bece0"
   grantType: "authorization_code"
 
 logging:
