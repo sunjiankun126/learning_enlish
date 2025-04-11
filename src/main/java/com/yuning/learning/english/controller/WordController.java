@@ -1,15 +1,14 @@
 package com.yuning.learning.english.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.yuning.learning.english.entity.Word;
 //import com.yuning.learning.english.service.DynamicTableService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yuning.learning.english.dto.Word;
+import com.yuning.learning.english.service.WordService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/word")
@@ -17,17 +16,17 @@ import java.util.List;
 @Api(tags = {"单词控制器"})
 public class WordController {
 
-//    @Autowired
-//    private DynamicTableService dynamicTableService;
 
-//    @GetMapping("/query/words")
-//    public ResponseEntity<List<Word>> queryWords(
-//            @RequestParam String userId,
-//            @RequestParam String tableName,
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size) {
-//        IPage<Word> wordIPage = dynamicTableService.queryTableWithPagination(tableName, page, size);
-//        return ResponseEntity.ok(wordIPage.getRecords());
-//    }
+	@Autowired
+	private WordService wordService;
+
+	@GetMapping("/dictionary/{dictionaryId}")
+	@ApiOperation("根据字典ID分页查询单词信息")
+	public Page<Word> getWordsByDictionaryId(
+		@PathVariable Integer dictionaryId,
+		@RequestParam(defaultValue = "10") Integer pageSize,
+		@RequestParam(defaultValue = "1") Integer pageNum) {
+		return wordService.getWordsByDictionaryId(dictionaryId, pageSize, pageNum);
+	}
 
 }

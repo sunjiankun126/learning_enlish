@@ -49,8 +49,7 @@ CREATE TABLE IF NOT EXISTS favorite_words (
 CREATE TABLE IF NOT EXISTS  dictionary (
        id SMALLINT PRIMARY KEY AUTO_INCREMENT COMMENT '唯一标识符',
        name VARCHAR(100) NOT NULL COMMENT '考试名称',
-        unique  key (name),
-       created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+       unique  key (name)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '字典类型' ROW_FORMAT = Dynamic;
 
 CREATE TABLE IF NOT EXISTS  dict_word_relation (

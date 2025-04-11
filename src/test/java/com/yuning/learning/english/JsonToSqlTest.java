@@ -14,9 +14,9 @@ public class JsonToSqlTest {
     @Test
     public  void jsonFile2Dictionary() throws IOException {
         // JSON 文件路径
-        String jsonFilePath = "F:\\SJK\\learning_enlish\\learning_enlish\\src\\main\\resources\\dictionary\\base\\en2zh_CN.json";
+        String jsonFilePath = "E:\\personal\\learning_enlish\\src\\main\\resources\\dictionary\\base\\en2zh_CN.json";
         // SQL 输出文件路径
-        String sqlFilePath = "F:\\SJK\\learning_enlish\\learning_enlish\\src\\main\\resources\\mybatis\\sql\\data\\base\\dictionary.sql";
+        String sqlFilePath = "E:\\personal\\learning_enlish\\src\\main\\resources\\mybatis\\sql\\data\\base\\words.sql";
         createFileIfNotExists(sqlFilePath);
         // 表名
         String tableName = "words";
@@ -43,7 +43,7 @@ public class JsonToSqlTest {
 
                 // 构造 INSERT 语句
                 String sql = String.format(
-                        "INSERT INTO %s (name, trans, uk_phone, us_phone) VALUES ('%s', '%s', %s, %s);\n",
+                        "INSERT IGNORE INTO %s (name, trans, uk_phone, us_phone) VALUES ('%s', '%s', %s, %s);\n",
                         tableName,
                         name,
                         trans,
