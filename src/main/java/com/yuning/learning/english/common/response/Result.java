@@ -1,31 +1,211 @@
 package com.yuning.learning.english.common.response;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.yuning.learning.english.constant.HttpStatus;
+import com.yuning.learning.english.utils.StringUtils;
 
-/**
- * @author zhangfei
- * @version 1.0
- * @date 2022/7/7 17:19
- */
-@Api
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Result<T> {
-    @ApiModelProperty(value = "消息码", dataType = "Integer", example = "0")
-    private Integer code;
-    /**
-     * 响应提示信息
-     */
-    @ApiModelProperty(value = "返回消息", dataType = "String", example = "success")
-    private String message;
-    /**
-     * 响应结果对象
-     */
-    @ApiModelProperty(value = "具体数据", dataType = "Object", example = "null")
-    private T data;
+import java.util.HashMap;
+import java.util.Objects;
+
+public class Result extends HashMap<String, Object>  {
+	private static final long serialVersionUID = 1L;
+
+	/** 状态码 */
+	public static final String CODE_TAG = "code";
+
+	/** 返回内容 */
+	public static final String MSG_TAG = "msg";
+
+	/** 数据对象 */
+	public static final String DATA_TAG = "data";
+
+	/**
+	 * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
+	 */
+	public Result()
+	{
+	}
+
+	/**
+	 * 初始化一个新创建的 AjaxResult 对象
+	 *
+	 * @param code 状态码
+	 * @param msg 返回内容
+	 */
+	public Result(int code, String msg)
+	{
+		super.put(CODE_TAG, code);
+		super.put(MSG_TAG, msg);
+	}
+
+	/**
+	 * 初始化一个新创建的 AjaxResult 对象
+	 *
+	 * @param code 状态码
+	 * @param msg 返回内容
+	 * @param data 数据对象
+	 */
+	public Result(int code, String msg, Object data)
+	{
+		super.put(CODE_TAG, code);
+		super.put(MSG_TAG, msg);
+		if (StringUtils.isNotNull(data))
+		{
+			super.put(DATA_TAG, data);
+		}
+	}
+
+	/**
+	 * 返回成功消息
+	 *
+	 * @return 成功消息
+	 */
+	public static Result success()
+	{
+		return Result.success("操作成功");
+	}
+
+	/**
+	 * 返回成功数据
+	 *
+	 * @return 成功消息
+	 */
+	public static Result success(Object data)
+	{
+		return Result.success("操作成功", data);
+	}
+
+	/**
+	 * 返回成功消息
+	 *
+	 * @param msg 返回内容
+	 * @return 成功消息
+	 */
+	public static Result success(String msg)
+	{
+		return Result.success(msg, null);
+	}
+
+	/**
+	 * 返回成功消息
+	 *
+	 * @param msg 返回内容
+	 * @param data 数据对象
+	 * @return 成功消息
+	 */
+	public static Result success(String msg, Object data)
+	{
+		return new Result(HttpStatus.SUCCESS, msg, data);
+	}
+
+	/**
+	 * 返回警告消息
+	 *
+	 * @param msg 返回内容
+	 * @return 警告消息
+	 */
+	public static Result warn(String msg)
+	{
+		return Result.warn(msg, null);
+	}
+
+	/**
+	 * 返回警告消息
+	 *
+	 * @param msg 返回内容
+	 * @param data 数据对象
+	 * @return 警告消息
+	 */
+	public static Result warn(String msg, Object data)
+	{
+		return new Result(HttpStatus.WARN, msg, data);
+	}
+
+	/**
+	 * 返回错误消息
+	 *
+	 * @return 错误消息
+	 */
+	public static Result error()
+	{
+		return Result.error("操作失败");
+	}
+
+	/**
+	 * 返回错误消息
+	 *
+	 * @param msg 返回内容
+	 * @return 错误消息
+	 */
+	public static Result error(String msg)
+	{
+		return Result.error(msg, null);
+	}
+
+	/**
+	 * 返回错误消息
+	 *
+	 * @param msg 返回内容
+	 * @param data 数据对象
+	 * @return 错误消息
+	 */
+	public static Result error(String msg, Object data)
+	{
+		return new Result(HttpStatus.ERROR, msg, data);
+	}
+
+	/**
+	 * 返回错误消息
+	 *
+	 * @param code 状态码
+	 * @param msg 返回内容
+	 * @return 错误消息
+	 */
+	public static Result error(int code, String msg)
+	{
+		return new Result(code, msg, null);
+	}
+
+	/**
+	 * 是否为成功消息
+	 *
+	 * @return 结果
+	 */
+	public boolean isSuccess()
+	{
+		return Objects.equals(HttpStatus.SUCCESS, this.get(CODE_TAG));
+	}
+
+	/**
+	 * 是否为警告消息
+	 *
+	 * @return 结果
+	 */
+	public boolean isWarn()
+	{
+		return Objects.equals(HttpStatus.WARN, this.get(CODE_TAG));
+	}
+
+	/**
+	 * 是否为错误消息
+	 *
+	 * @return 结果
+	 */
+	public boolean isError()
+	{
+		return Objects.equals(HttpStatus.ERROR, this.get(CODE_TAG));
+	}
+
+	/**
+	 * 方便链式调用
+	 *
+	 * @param key 键
+	 * @param value 值
+	 * @return 数据对象
+	 */
+	@Override
+	public Result put(String key, Object value)
+	{
+		super.put(key, value);
+		return this;
+	}
 }
