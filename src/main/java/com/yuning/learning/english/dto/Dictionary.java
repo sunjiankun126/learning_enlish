@@ -26,4 +26,7 @@ public class Dictionary implements Serializable {
 
 	private String name;
 
+	private String fatherClass; // 大的分类
+	private String subClass; // 小的分类
+
 }
