@@ -22,6 +22,8 @@ public class Dictionary implements Serializable {
 	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
 
+	private String type;
+
 	private String name;
 
 }

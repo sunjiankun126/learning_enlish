@@ -52,11 +52,11 @@ CREATE TABLE IF NOT EXISTS  dictionary (
        unique  key (name)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '字典类型' ROW_FORMAT = Dynamic;
 
-CREATE TABLE IF NOT EXISTS  dict_word_relation (
-         word_id MEDIUMINT NOT NULL COMMENT '单词id',
-         dictionary_id SMALLINT NOT NULL COMMENT '词典Id',
-         PRIMARY KEY (word_id, dictionary_id),
-         FOREIGN KEY (dictionary_id) REFERENCES dictionary(id),
-         FOREIGN KEY (word_id) REFERENCES words(id)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '字典单词表' ROW_FORMAT = Dynamic;
+# CREATE TABLE IF NOT EXISTS  dict_word_relation (
+#          word_id MEDIUMINT NOT NULL COMMENT '单词id',
+#          dictionary_id SMALLINT NOT NULL COMMENT '词典Id',
+#          PRIMARY KEY (word_id, dictionary_id),
+#          FOREIGN KEY (dictionary_id) REFERENCES dictionary(id),
+#          FOREIGN KEY (word_id) REFERENCES words(id)
+# ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '字典单词表' ROW_FORMAT = Dynamic;
 

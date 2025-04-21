@@ -26,7 +26,7 @@ public class SwaggerConfiguration  {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.yuning.feihua"))  // 修改为你的包名
+                .apis(RequestHandlerSelectors.basePackage("com.yuning.learning.english.controller"))  // 修改为你的包名
                 .paths(PathSelectors.any())  // 这里是所有路径都会暴露 API 文档
                 .build()
                 .apiInfo(new ApiInfoBuilder()

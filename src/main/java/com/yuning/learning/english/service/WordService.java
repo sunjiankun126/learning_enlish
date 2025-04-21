@@ -27,7 +27,7 @@ public class WordService {
 		// 获取关联的 wordIds 列表
 		Page<DictWordRelation> page = new Page<>(pageNum, pageSize);
 		Page<DictWordRelation> dictWordRelationResult = dictWordRelationMapper.selectPage(page,
-			new LambdaQueryWrapper<DictWordRelation>().eq(DictWordRelation::getDictionaryId, dictionaryId)
+			new LambdaQueryWrapper<DictWordRelation>().eq(DictWordRelation::getDictionaryId, dictionaryId).orderBy(true, true, DictWordRelation::getWordId)
 		);
 		List<Integer> wordIds = dictWordRelationResult.getRecords().stream().map(DictWordRelation::getWordId).collect(Collectors.toList());
 
