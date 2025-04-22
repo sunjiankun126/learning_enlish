@@ -15,6 +15,11 @@ public enum DictionarySubClass {
 	PTE,
 	TOEIC,
 	Oxford,
+	BeiShiDa,
+	EF,
+	WaiYanShe,
+	YiLin,
+	General, // 通用英语
 
 
 	Other // 其他分类
